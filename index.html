@@ -1,0 +1,163 @@
+<title>Didaktik taʼminot trenajyori</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Public+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: narrow single column, tab bar on top, one working card at a time. */
+:root{--bg:#EEF3F5;--surface:#FFFFFF;--fg:#14232E;--muted:#4F6270;--line:#CBD7DE;--accent:#0B6E7F;--accent-fg:#FFFFFF;--ok:#1B7A46;--ok-bg:#DDF2E5;--bad:#A3321F;--bad-bg:#F8E1DC;--mark:#F2C14E;--display:'Fraunces',Georgia,serif;--text:'Public Sans',Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1A21;--surface:#17262F;--fg:#E6EEF2;--muted:#9FB3C0;--line:#2C4250;--accent:#4FB8C9;--accent-fg:#0F1A21;--ok:#6FD39A;--ok-bg:#16382A;--bad:#FF8F7A;--bad-bg:#43211B;--mark:#F2C14E;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1A21;--surface:#17262F;--fg:#E6EEF2;--muted:#9FB3C0;--line:#2C4250;--accent:#4FB8C9;--accent-fg:#0F1A21;--ok:#6FD39A;--ok-bg:#16382A;--bad:#FF8F7A;--bad-bg:#43211B;--mark:#F2C14E;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:400 17px/1.55 var(--text);padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+h1{font:600 clamp(28px,6vw,42px)/1.12 var(--display);margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:8px 0 0;max-width:62ch}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav button{font:600 16px var(--text);padding:10px 16px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+button:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:clamp(18px,4vw,32px);display:flex;flex-direction:column;gap:20px}
+.meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:15px;flex-wrap:wrap}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.card{min-height:180px;border:1px solid var(--line);border-radius:10px;padding:24px;display:flex;flex-direction:column;justify-content:center;gap:10px;cursor:pointer;background:var(--bg);text-align:left;font:inherit;color:inherit;width:100%}
+.card .tag{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.card .q{font:600 24px/1.25 var(--display)}
+.card .a{font-size:18px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:600 16px var(--text);padding:11px 18px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-fg);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn[disabled]{opacity:.45;cursor:default}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;font:inherit;color:inherit;padding:13px 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad)}
+.fb{padding:14px 16px;border-left:4px solid var(--accent);background:var(--bg);border-radius:0 8px 8px 0}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.pairs{grid-template-columns:1fr}}
+.col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.pill{font:inherit;color:inherit;text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer}
+.pill.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.pill.done{background:var(--ok-bg);border-color:var(--ok);cursor:default}
+.pill.err{background:var(--bad-bg);border-color:var(--bad)}
+.score{font:600 40px var(--display)}
+.src{font-size:14px;color:var(--muted)}
+h2{font:600 22px var(--display);margin:0}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+<main>
+<header>
+<h1>Didaktik taʼminot trenajyori</h1>
+<p class="sub">Uzluksiz taʼlimda mutaxassislik fanlarining didaktik taʼminoti va boshlangʻich taʼlim muammolari bo‘yicha o‘zini sinash: kartochkalar, juftlash va test.</p>
+</header>
+<nav role="tablist" aria-label="Rejimlar">
+<button role="tab" id="t-cards" aria-selected="true" data-tab="cards">Kartochkalar</button>
+<button role="tab" id="t-match" aria-selected="false" data-tab="match">Juftlash</button>
+<button role="tab" id="t-quiz" aria-selected="false" data-tab="quiz">Test</button>
+</nav>
+<section class="panel" id="view" aria-live="polite"></section>
+<p class="src">Mazmun taqdimotdagi manbalarga tayanadi: Hattie (2009), Mayer (2009), Atamuratova va boshq. (2008), Jahon banki (2026), UNICEF (2026), Khassenova (2024), Nishonova, Oripova (2024). Tavsif va mezonlar mualliflik umumlashtirmasi; asl nashrlardan tekshiring.</p>
+</main>
+<script>
+const CARDS=[
+["Didaktik taʼminot","Oʻquv jarayonini tashkil etish uchun zarur mazmun, metod, vosita va baholash materiallarining oʻzaro bogʻliq tizimi (umumlashtirma)."],
+["Uzluksiz taʼlim","Maktabgacha, maktab, kasb-hunar, oliy taʼlim va qayta tayyorlash bosqichlarini izchil birlashtiruvchi tizim."],
+["Didaktik taʼminot komponentlari","1) Meʼyoriy-mazmuniy, 2) oʻquv-metodik, 3) didaktik vosita, 4) diagnostik-baholash."],
+["L.S.Vigotskiy","Taʼlim rivojlanishdan oldinda boradi: topshiriq yaqin rivojlanish zonasiga mos boʻlishi kerak."],
+["R.Mayer multimedia nazariyasi","Ikki kanal, cheklangan sigʻim, faol qayta ishlash: matn va rasm uygʻun, ortiqcha bezaksiz boʻlsin."],
+["Hattie: formativ baholash","Meta-tahlilda effekt oʻlchami taxminan 0.90; 0.40 mazmunli taʼsir chegarasi. Tanqidlar mavjud, mahalliy tajriba bilan tekshiring."],
+["Uzviylik tamoyili","Bosqichlar (masalan, boshlangʻich va asosiy) oʻrtasida mazmun va usullar izchil boʻlishi shart (Vashulenko, 2020)."],
+["12 yillik maktab modeli","1 yil tayyorlov, 4 yil boshlangʻich, 5 yil asosiy oʻrta, 2 yil toʻliq oʻrta taʼlim (Kun.uz xabari)."],
+["EGRA yondashuvi","Oʻqish savodxonligini erta diagnostika qilish: oʻqish tezligi va tushunishni formativ baholash."],
+["Muammoli taʼlim","Muammoli vaziyat orqali izlanish va tahlilni rivojlantiradigan usul (Nazarova)."]
+];
+const PAIRS=[
+["Vigotskiy","Topshiriq yaqin rivojlanish zonasiga mos"],
+["Mayer","Matn va rasm uygʻun, ortiqcha bezaksiz"],
+["Hattie","Aniq maqsad va qayta aloqa"],
+["Muammoli taʼlim","Izlanish va muammoli topshiriqlar banki"]
+];
+const QUIZ=[
+["Didaktik taʼminotning toʻrtta komponentidan qaysi biri baholash mezonlari va testlarni oʻz ichiga oladi?",["Meʼyoriy-mazmuniy","Oʻquv-metodik","Didaktik vosita","Diagnostik-baholash"],3,"Diagnostik-baholash komponenti test, rubrika, formativ va yakuniy baholashni qamrab oladi."],
+["Qaysi nazariya taʼlim rivojlanishdan oldinda borishini taʼkidlaydi?",["Mayer","Vigotskiy","Hattie","Bloom"],1,"Vigotskiy: taʼlim bolaning ertangi rivojlanishiga moslab tashkil etiladi."],
+["Mayer nazariyasining uch asosi qaysi javobda toʻgʻri koʻrsatilgan?",["Ikki kanal, cheklangan sigʻim, faol qayta ishlash","Takrorlash, yodlash, nazorat","Oʻyin, musobaqa, mukofot","Baho, tartib, jazo"],0,"Mayer: ikki kanalli qayta ishlash, cheklangan sigʻim va faol qayta ishlash."],
+["Hattie meta-tahlilida mazmunli taʼsir chegarasi qaysi qiymat?",["0.10","0.40","0.75","0.90"],1,"0.40 chegara sifatida olinadi; formativ baholash taxminan 0.90."],
+["Nishonova maqolasiga koʻra, amaliyotdagi muammolardan biri qaysi?",["Darsliklar ortiqcha koʻp","Didaktik materiallar barcha maktabda mavjud emas","Oʻqituvchilar juda koʻp","Maktablar soni kam"],1,"Maqolada didaktik materiallar hamma maktabda yetarli emasligi koʻrsatilgan."],
+["12 yillik maktab modelida boshlangʻich taʼlim necha yil?",["2 yil","3 yil","4 yil","5 yil"],2,"1 yil tayyorlov va 4 yil boshlangʻich taʼlim."],
+["Oʻqish savodxonligini erta diagnostika qilish uchun qaysi yondashuv tavsiya etilgan?",["EGRA","PISA","TIMSS","SAT"],0,"Qoʻqon universiteti maqolasi EGRA asosidagi formativ diagnostikani taklif qiladi."],
+["Jahon banki BILIM dasturida nechta 1–4-sinf oʻquvchisi qamrab olinadi?",["Taxminan 200 ming","Taxminan 2 million","Taxminan 7 million","Taxminan 50 ming"],1,"Dastur 2 million boshlangʻich sinf oʻquvchisiga moʻljallangan; 50 000 oʻqituvchi va rahbar rivojlantiriladi."]
+];
+const view=document.getElementById('view');
+const sh=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+let tab='cards';
+function setTab(t){tab=t;document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));({cards,match,quiz})[t]();}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+
+function cards(){
+ let i=0,flip=false,known=new Set();
+ function draw(){
+  const [q,a]=CARDS[i];
+  view.innerHTML=`<div class="meta"><span>Kartochka ${i+1} / ${CARDS.length}</span><span>Bilaman: ${known.size}</span></div>
+  <div class="bar"><i style="width:${known.size/CARDS.length*100}%"></i></div>
+  <button class="card" id="c" aria-label="Kartochkani aylantirish"><span class="tag">${flip?'Javob':'Tushuncha'}</span>${flip?`<span class="a">${esc(a)}</span>`:`<span class="q">${esc(q)}</span>`}<span class="src">${flip?'':'Javobni koʻrish uchun bosing'}</span></button>
+  <div class="row"><button class="btn ghost" id="p" ${i==0?'disabled':''}>Oldingisi</button>
+  <button class="btn ghost" id="k">${known.has(i)?'Belgini olib tashlash':'Bilaman'}</button>
+  <button class="btn" id="n" ${i==CARDS.length-1?'disabled':''}>Keyingisi</button></div>`;
+  c.onclick=()=>{flip=!flip;draw()};
+  p.onclick=()=>{i--;flip=false;draw()};
+  n.onclick=()=>{i++;flip=false;draw()};
+  k.onclick=()=>{known.has(i)?known.delete(i):known.add(i);draw()};
+ }
+ draw();
+}
+
+function match(){
+ const L=sh(PAIRS.map((p,i)=>[p[0],i])),R=sh(PAIRS.map((p,i)=>[p[1],i]));
+ let sel=null,done=new Set(),tries=0;
+ function draw(){
+  view.innerHTML=`<h2>Nazariyani uning talabi bilan juftlang</h2>
+  <div class="meta"><span>Juftlangan: ${done.size} / ${PAIRS.length}</span><span>Urinishlar: ${tries}</span></div>
+  <div class="pairs"><div class="col">${L.map(([t,k])=>`<button class="pill ${done.has(k)?'done':''} ${sel&&sel.s==='L'&&sel.k===k?'sel':''}" data-s="L" data-k="${k}">${esc(t)}</button>`).join('')}</div>
+  <div class="col">${R.map(([t,k])=>`<button class="pill ${done.has(k)?'done':''} ${sel&&sel.s==='R'&&sel.k===k?'sel':''}" data-s="R" data-k="${k}">${esc(t)}</button>`).join('')}</div></div>
+  ${done.size===PAIRS.length?`<div class="fb">Barchasi toʻgʻri, ${tries} urinishda. Yana bir bor urinib koʻring.</div><div class="row"><button class="btn" id="r">Qayta boshlash</button></div>`:''}`;
+  view.querySelectorAll('.pill:not(.done)').forEach(b=>b.onclick=()=>{
+   const s=b.dataset.s,k=+b.dataset.k;
+   if(!sel||sel.s===s){sel={s,k};return draw();}
+   tries++;
+   if(sel.k===k){done.add(k);sel=null;draw();}
+   else{b.classList.add('err');sel=null;setTimeout(draw,500);}
+  });
+  const r=document.getElementById('r');if(r)r.onclick=match;
+ }
+ draw();
+}
+
+function quiz(){
+ const qs=sh(QUIZ);let i=0,score=0,answered=false;
+ function draw(){
+  if(i>=qs.length){
+   const pct=Math.round(score/qs.length*100);
+   view.innerHTML=`<h2>Natija</h2><div class="score">${score} / ${qs.length}</div><div class="bar"><i style="width:${pct}%"></i></div>
+   <p>${pct>=75?'Mavzu yaxshi oʻzlashtirilgan. Kartochkalar bilan xatolarni mustahkamlang.':'Kartochkalar boʻlimini takrorlab, testni qayta ishlang.'}</p>
+   <div class="row"><button class="btn" id="r">Qayta boshlash</button><button class="btn ghost" id="c">Kartochkalarga oʻtish</button></div>`;
+   r.onclick=quiz;c.onclick=()=>setTab('cards');return;
+  }
+  const [q,o,a,e]=qs[i];
+  view.innerHTML=`<div class="meta"><span>Savol ${i+1} / ${qs.length}</span><span>Ball: ${score}</span></div>
+  <div class="bar"><i style="width:${i/qs.length*100}%"></i></div>
+  <h2>${esc(q)}</h2><div class="opts">${o.map((t,j)=>`<button class="opt" data-j="${j}">${esc(t)}</button>`).join('')}</div>
+  <div id="fb"></div><div class="row"><button class="btn" id="nx" hidden>${i==qs.length-1?'Natijani koʻrish':'Keyingi savol'}</button></div>`;
+  answered=false;
+  view.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+   if(answered)return;answered=true;const j=+b.dataset.j;
+   if(j===a)score++;
+   view.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(+x.dataset.j===a)x.classList.add('ok');else if(x===b)x.classList.add('bad')});
+   fb.innerHTML=`<div class="fb"><b>${j===a?'Toʻgʻri.':'Notoʻgʻri.'}</b> ${esc(e)}</div>`;
+   nx.hidden=false;nx.focus();
+  });
+  nx.onclick=()=>{i++;draw()};
+ }
+ draw();
+}
+setTab('cards');
+</script>
